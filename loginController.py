@@ -12,10 +12,14 @@ def logincontroller(email, password):
         session.pop('request', None)
         return redirect(request)
 
-    if result == "true":
-        # If user exists, enter shop
-        #return redirect("/shop")
+    if result == 1:
+        # admin page
         return redirect(url_for('dashboard'))
+    
+    elif result == 2:
+        # employee page
+        return redirect(url_for('admin'))
+    
     else:
         # If user doesn't exist, return to login and trigger error message
         return render_template('login.html', error='Invalid username or password')

@@ -8,7 +8,6 @@ app.secret_key = 'your_secret_key'
 # Routes
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    print(session)
     if request.method == 'POST':
         email = request.form['username']
         password = request.form['password']

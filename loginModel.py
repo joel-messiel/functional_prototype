@@ -14,12 +14,13 @@ def loginmodel(email, password):
             "employee_id": res['employee_id'], 
             "email": res['email'], 
             "password": res['password'], 
-            "is_active": res['is_active']
+            "is_active": res['is_active'],
+            "role": res['role']
         }
     
     except Exception as e:
         print("Exception: ", e)
-        return False
+        return -1
 
     # sha256_crypt.hash("password") = this is what is used to encrypt a password
     # sha256_crypt.verify(password_unhashed, password_hashed) = this is what is used to compare an unhashed and hashed password
@@ -28,12 +29,16 @@ def loginmodel(email, password):
         if user['is_active'] == 0:
             # If the user is not active, return false
             flash("User is not active")
-            return "false"
+            return -1
         # If the user is found, save the user ID in the session 
         session['username'] = user['employee_id']
         # Create the session['customer'] saving the customer ID if user is found
-        return "true"
+        if user["role"] == "employee":
+            return 2
+        
+        return 1
+    
     else:
         # If it didn't find user, return false
         flash("Invalid email or password")
-        return "false"
+        return -1
