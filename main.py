@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
-from loginController import logincontroller
+from loginController import loginController, changePasswordController
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -11,33 +11,20 @@ def login():
     if request.method == 'POST':
         email = request.form['username']
         password = request.form['password']
-        return logincontroller(email, password)
+        return loginController(email, password)
 
     return render_template('login.html')
 
+# this will be changed to change password
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-
-        if password == confirm_password:
-            hashed_password = generate_password_hash(password)
-
-            with open('users.json', 'r') as file:
-                users = json.load(file)
-
-            users[username] = {'password': hashed_password}
-
-            with open('users.json', 'w') as file:
-                json.dump(users, file)
-
-            return render_template('signup_success.html', username=username)
-
-        else:
-            return render_template('signup.html', error='Passwords do not match')
-
+        old_password = request.form['password']
+        new_password = request.form['confirm_password']
+        print("ok")
+        return changePasswordController(username, old_password, new_password)
+    print("ok", request.method)
     return render_template('signup.html')
 
 @app.route('/dashboard')
