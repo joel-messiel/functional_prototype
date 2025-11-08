@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
-from loginController import loginController, changePasswordController
+from controllers.loginController import loginController, changePasswordController
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -9,7 +9,7 @@ app.secret_key = 'your_secret_key'
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['username']
+        email = request.form['email']
         password = request.form['password']
         return loginController(email, password)
 
@@ -19,7 +19,7 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['email']
         old_password = request.form['password']
         new_password = request.form['confirm_password']
         print("ok")

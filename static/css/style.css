@@ -1,0 +1,150 @@
+/* the css is very bad here lol , so u can just update the classes of tailwind most of this css is useless*/
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+
+
+:root {
+    /* Place for variables */
+    --color-text-light: #cbd5e0;
+    --gray-manati: #45545F;
+    --golden-manati: #C8AC64;
+    --hover-golden-manati: #b99948;
+    --white: #FFFFFF;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: #1a202c;
+    color: var(--color-text-light);
+
+    /* Custom scrollbar styles u can change it C: */
+    scrollbar-width: thin;
+    scrollbar-color: #4a5568 #1a202c;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #4a5568;
+    /* Tailwind color for scrollbar thumb */
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #1a202c;
+    /* Tailwind dark theme background color for scrollbar track */
+}
+
+.container {
+    @apply flex justify-center items-center h-screen;
+}
+
+.card {
+    @apply relative w-72 h-96 bg-white shadow-lg rounded-md overflow-hidden transform scale-90 transition-transform duration-500 ease-in-out;
+
+    &:hover {
+        @apply scale-100;
+    }
+}
+
+.card .imgBx {
+    @apply relative w-full h-52 z-10 overflow-hidden;
+}
+
+.card .imgBx img {
+    @apply absolute top-0 left-0 w-full h-full object-cover transition duration-500 ease-in-out;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        @apply flex-col;
+    }
+
+    .card {
+        @apply w-full mb-4;
+    }
+
+}
+
+.signin-card {
+    background-color: var(--gray-manati);
+    width: 500px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 15px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.signin-btn {
+    background-color: var(--golden-manati);
+    color: var(--white);
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.signin-btn:hover {
+    background-color: var(--hover-golden-manati);
+}
+
+.form-input {
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.footer-bar {
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.header-bar {
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+}
+
+.forgot-pass {
+    color: var(--golden-manati);
+    font-size: 1em;
+}
+
+.logo-container {
+    top: 40px;
+}
+
+.forgot-pass-card {
+    background-color: var(--gray-manati);
+    width: 400px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 15px;
+    color: var(--white);
+}
+
+.confirm-pass {
+    background-color: var(--golden-manati);
+    color: var(--white);
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.confirm-pass:hover {
+    background-color: var(--hover-golden-manati);
+}

@@ -1,4 +1,4 @@
-from loginModel import *
+from models.loginModel import *
 from flask import redirect, render_template, session, url_for
 from passlib.hash import sha256_crypt
 

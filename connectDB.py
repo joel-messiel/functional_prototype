@@ -4,8 +4,8 @@ import pymysql.cursors
 DB_URL = '127.0.0.1'
 DB_NAME = 'prototype_db'
 DB_PORT = 3306
-DB_USER = 'joelm12pr'
-DB_PASSWORD = '03M0nch!tOMl'
+DB_USER = 'root'
+DB_PASSWORD = 'root'
 
 # Use this to access database
 class Dbconnect:
