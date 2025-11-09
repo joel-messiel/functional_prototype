@@ -19,11 +19,14 @@ def loginModel(email, password):
         }
     
     except Exception as e:
+        # Email not found
         print("Exception in loginmodel: ", e)
         return -1
 
     # sha256_crypt.hash("password") = this is what is used to encrypt a password
     # sha256_crypt.verify(password_unhashed, password_hashed) = this is what is used to compare an unhashed and hashed password
+
+
 
     if sha256_crypt.verify(password, user['password']) is True:
         if user['is_active'] == 0:
@@ -40,10 +43,10 @@ def loginModel(email, password):
     
     else:
         # If it didn't find user, return false
-        flash("Invalid email or password")
+        flash("Invalid email or password", "error")
         return -1
     
-def changePasswordModel(email, old_password, new_password):
+def changePasswordModel(email, old_password, new_password, confirm_new_password):
     user = None
     db = Dbconnect()
     sql = "SELECT * FROM employee WHERE email = %s"
@@ -63,11 +66,15 @@ def changePasswordModel(email, old_password, new_password):
         print("Exception: ", e)
         return -1
     
+   
     if sha256_crypt.verify(old_password, user['password']) is True:
         if user['is_active'] == 0:
             # If the user is not active, return false
-            flash("User is not active")
+            flash("User is not active", "error")
             return -1
+
+        if new_password != confirm_new_password:
+            return -2
         
         if user["role"] == "branch_admin" or user["role"] == "branch_admin":
             sql = "UPDATE employee SET password=%s WHERE employee_id=%s"
@@ -88,5 +95,5 @@ def changePasswordModel(email, old_password, new_password):
             return 2
     
     else:
-        flash("Invalid password")
+        flash("Invalid password", "error")
         return -1

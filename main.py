@@ -16,16 +16,17 @@ def login():
     return render_template('login.html')
 
 # this will be changed to change password
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/change_pass', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['email']
-        old_password = request.form['password']
-        new_password = request.form['confirm_password']
+        old_password = request.form.get('old_password')
+        new_password = request.form.get('new_password')
+        confirm_new_password = request.form.get('confirm_new_password')
         print("ok")
-        return changePasswordController(username, old_password, new_password)
+        return changePasswordController(username, old_password, new_password, confirm_new_password)
     print("ok", request.method)
-    return render_template('signup.html')
+    return render_template('change_password.html')
 
 @app.route('/dashboard')
 def dashboard():
