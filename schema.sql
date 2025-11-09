@@ -17,6 +17,15 @@ CREATE TABLE employee (
     is_active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (branch_id) REFERENCES branch(branch_id) ON DELETE RESTRICT
 );
+CREATE TABLE password_reset (
+    password_reset_id INT PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT NOT NULL,
+    password_reset_token VARCHAR(255) NOT NULL UNIQUE,
+    token_secret VARCHAR(255) NOT NULL,
+    token_expires DATETIME,
+    new_password VARCHAR(255) NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON DELETE RESTRICT
+);
 CREATE TABLE `modify` (
     modify_id INT PRIMARY KEY AUTO_INCREMENT,
     admin_id INT NOT NULL,
@@ -44,9 +53,29 @@ VALUES (
         "John",
         "R",
         "Williams",
-        "j.william@coopmanati.net",
+        "joelm12pr@gmail.com",
         "$5$rounds=535000$D6BSFM/AgzQ39Aet$AWk9J/pOwBaslIHErUvy807x1sXopPaUhGyiZ6oRYT2",
         "branch_admin",
+        "active",
+        true
+    );
+INSERT INTO employee (
+        branch_id,
+        first_name,
+        last_name,
+        email,
+        password,
+        role,
+        employee_status,
+        is_active
+    )
+VALUES (
+        1,
+        "Pepo",
+        "del Pueblo",
+        "p.delpueblo@coopmanati.net",
+        "$5$rounds=535000$Kmh7NxLSR8Vd4mYU$9VlYElT6Fv8hOq2VLU6rHDnuvnmQYyynwwpF7mB1T2A",
+        "employee",
         "active",
         true
     );
