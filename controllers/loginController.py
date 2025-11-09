@@ -21,6 +21,7 @@ def loginController(email, password):
         return redirect(url_for('employee_page'))
     else:
         # If user doesn't exist, return to login and trigger error message
+        flash('Invalid email or password', 'error')
         return render_template('login.html')
     
 def changePasswordController(email, old_password, new_password, confirm_new_password):
