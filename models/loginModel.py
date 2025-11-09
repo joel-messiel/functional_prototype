@@ -95,5 +95,4 @@ def changePasswordModel(email, old_password, new_password, confirm_new_password)
             return 2
     
     else:
-        flash("Invalid password", "error")
         return -1
