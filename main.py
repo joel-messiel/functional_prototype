@@ -40,6 +40,9 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('not_found.html'), 404
 
 # Run the application
 if __name__ == '__main__':
