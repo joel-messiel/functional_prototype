@@ -1,14 +1,41 @@
 DROP DATABASE `prototype_db`;
 CREATE DATABASE `prototype_db`;
+CREATE TABLE `service` (
+    service_id INT PRIMARY KEY AUTO_INCREMENT,
+    `service_name` ENUM(
+        "Caja",
+        "Area de Servicio",
+        "Socios fallecidos/certificados de deposito",
+        "Descuento Nominal",
+        "Departamento de Cobros"
+    ) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE
+);
 CREATE TABLE branch (
     branch_id INT PRIMARY KEY AUTO_INCREMENT,
-    branch_name VARCHAR(50) NOT NULL
+    branch_name ENUM(
+        "Manatí Central",
+        "Manati Plaza",
+        "Mortgage and commercial center",
+        "Vega Baja",
+        "Barceloneta",
+        "Ciales Centro",
+        "Ciales Expreso"
+    ) NOT NULL
+);
+CREATE TABLE offers (
+    offers_id INT PRIMARY KEY AUTO_INCREMENT,
+    branch_id INT NOT NULL,
+    service_id INT NOT NULL,
+    FOREIGN KEY (service_id) REFERENCES `service`(service_id) ON DELETE RESTRICT,
+    FOREIGN KEY (branch_id) REFERENCES branch(branch_id) ON DELETE RESTRICT,
+    UNIQUE KEY unique_branch_service (branch_id, service_id)
 );
 CREATE TABLE employee (
     employee_id INT PRIMARY KEY AUTO_INCREMENT,
     branch_id INT NOT NULL,
     first_name VARCHAR(50) NOT NULL,
-    middle_initial VARCHAR(50),
+    middle_initial VARCHAR(1),
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
@@ -26,17 +53,41 @@ CREATE TABLE password_reset (
     new_password VARCHAR(255) NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON DELETE RESTRICT
 );
+CREATE TABLE turn (
+    turn_id INT PRIMARY KEY AUTO_INCREMENT,
+    turn_number INT NOT NULL,
+    `status` ENUM(
+        'waiting',
+        'called',
+        'in_progress',
+        'cancelled'
+    ) NOT NULL DEFAULT 'waiting',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    employee_id INT NULL,
+    called_at DATETIME NULL,
+    completed_at DATETIME NULL,
+    comment TEXT NULL,
+    customer_name VARCHAR(50) NULL,
+    purpose TEXT NULL,
+    branch_id INT NOT NULL,
+    service_id INT NOT NULL,
+    new_turn_id INT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON DELETE RESTRICT,
+    FOREIGN KEY (branch_id) REFERENCES branch(branch_id) ON DELETE RESTRICT,
+    FOREIGN KEY (service_id) REFERENCES `service`(service_id) ON DELETE RESTRICT,
+    FOREIGN KEY (new_turn_id) REFERENCES turn(turn_id) ON DELETE RESTRICT
+);
 CREATE TABLE `modify` (
     modify_id INT PRIMARY KEY AUTO_INCREMENT,
     admin_id INT NOT NULL,
     edited_employee_id INT NOT NULL,
     `action` INT NOT NULL,
-    `timestamp` TIMESTAMP NOT NULL,
+    modified_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (admin_id) REFERENCES employee(employee_id) ON DELETE RESTRICT,
     FOREIGN KEY (edited_employee_id) REFERENCES employee(employee_id) ON DELETE RESTRICT
 );
 INSERT INTO branch (branch_name)
-VALUES ("Manati Central");
+VALUES ("Manatí Central");
 INSERT INTO employee (
         branch_id,
         first_name,

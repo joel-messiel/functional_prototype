@@ -172,7 +172,7 @@ def changePasswordModel(email, new_password, confirm_new_password):
         hashed_new_password = sha256_crypt.hash(new_password)
         # Generate TOTP secret and token
         totp_secret = pyotp.random_base32()
-        totp = pyotp.TOTP(totp_secret, interval=900)  # 15 minutes
+        totp = pyotp.TOTP(totp_secret, interval=1800)  # 30 minutes
         verification_token = totp.now()
         
         # Store in database with expiration
@@ -264,7 +264,7 @@ def verifyPasswordResetModel(email, token):
         return False
     
     # Verify TOTP token
-    totp = pyotp.TOTP(res['token_secret'], interval=900)
+    totp = pyotp.TOTP(res['token_secret'], interval=1800)
     if not totp.verify(token, valid_window=1):  # Allow 1 step window
         flash('Invalid verification token', 'error')
         return False
