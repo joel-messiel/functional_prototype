@@ -1,177 +1,86 @@
-<!-- Title -->
-# Flask Login Template
+## CoopManatí 
+CoopManatí is a credit union and financial institution with more than 75 years of service in Puerto Rico. Its mission is to promote the socioeconomic development of its members by offering a wide range of financial products and services, including savings accounts, loans, and other financial solutions.
+
+## Purpose 
+The following code represents a small feature of the overall project developed for the CCOM4075 – Software Engineering course. The main goal of this project is to implement a Customer Service Analytics and Flow Management Tool for CoopManatí, which serves as an enhancement to their current queue management system.
+
+Currently, CoopManatí’s system functions solely as a queue manager. However, the organization requires a more comprehensive and adaptable solution. Therefore, this project aims to design a custom, web-based application capable of integrating not only queue management but also analytics, user management, monitoring, and reporting functionalities that facilitate data-driven decision-making and operational efficiency.
+
+## Scope of this code
+The current scope of this code is the Login/Logout and Change Password features / functional requirements for the administrators and employees.
+
+### Login/Logout
+Administrators and employees can enter their CoopManatí credentials to log in to the system. If the login is successful, they are greeted with a temporary dashboard where they can click the “Settings” button located at the top-right corner of the screen to log out. However, if the credentials are incorrect, an error message will appear, and the user will be redirected back to the login page.
+
+### Change password
+Both administrators and employees can change their passwords by clicking the “¿Olvidaste tu contraseña?” link. This link redirects them to the Change Password page, where they are prompted to enter their company email, a new password, and a confirmation of the new password.
+
+If an employee requests a password change and no errors are detected, an email notification is sent to their branch administrator for approval. On the other hand, if an administrator initiates a password change and no errors are found, a confirmation email is sent directly to their company email to approve the password reset.
+
+## How to test this feature
+Prerequisites:
+  1. Download the MySQL Workbench and MySQL Server
+
+
+#### Create local database instance
+1. Open MySQL Workbench, click the (+) button in MySQL Connections
+2. The "Set Up New Connection" window will pop-up, only change _Connection Name_ to "prototype_db" 
+3. Click Ok
+4. The new connection should be listed in the MySQL Connections section, double click to open
+5. In the query tab, copy and paste the contents of _schema.sql_
+6. Execute the queries one by one
+   - If "prototype_db" does not exist, you can ignore the first SQL query
+   - Remember to double click the database once created to select it for the next queries (click the refresh button in the __schemas_ section.
+   - ****IMPORTANT****: In the first insert into the employee table (admin insertion), change the email from "your-email@gmail.com" to your actual email to properly test the change password feature.
+
+#### Clone the repository 
+  ```bash
+  git clone https://github.com/joel-messiel/functional_prototype.git
+  ```
+#### Create and activate virtual environment
+  ```bash
+  python -m venv .venv
+  
+  source .venv/bin/activate  # On Linux/macOS
+  .venv\Scripts\activate   # On Windows
+  ```
+#### Install dependencies
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+#### Change connectDB.py database credentials
+Change the credentials to your local database credentials
+```
+DB_URL = '127.0.0.1'
+DB_NAME = 'prototype_db'
+DB_PORT = 3306
+DB_USER = 'root'
+DB_PASSWORD = ''
+```
+
+#### Configure email for _Change password_ feature
+****IMPORTANT: If you skip this step, the _Change password_ feature will not work. *****
+Developers should consider creating a new email account for sending the password reset emails. This account should enable `Allow less secure apps to ON` if using a gmail account and generate an app password. For more information see: [How to Generate a Gmail App Password from Your Account](https://www.getmailbird.com/gmail-app-password/)
+
+[Click here for more details on how the code works](https://realpython.com/python-send-email/ )
+
+
+  1. Create a new file with the name ".env"
+  2. Copy and paste the following to the file
+     ```bash
+       EMAIL_USER="your email"
+       APP_PASSWORD="app token
+     ```
+#### Run the application
+```bash
+python -m flask --app main.py run
+```
+
+#### Open the app
+Go to http://127.0.0.1:5000/ to view the app
 
-<!-- Badges -->
-![Made with Python](https://img.shields.io/badge/made%20with-Python-blue.svg)
-![License MIT](https://img.shields.io/badge/license-MIT-green.svg)
 
-<!-- About the Project -->
-## About the Project 🚀
 
-Flask Login Template is a simple and customizable authentication template built with Flask and Tailwind CSS. It provides a user-friendly login and signup experience with modern UI elements and features.
-
-<!-- Features -->
-## Key Features 🌟
-
-- **User Authentication**: Secure user authentication using Flask and Werkzeug.
-- **Modern UI**: Professionally designed login and signup forms with Tailwind CSS.
-- **Responsive**: Works seamlessly on various screen sizes.
-
-<!-- Getting Started -->
-## Getting Started 🚦
-
-To get started, follow these steps:
-
-1. Clone the repository.
-   ```bash
-   git clone https://github.com/ichliebees/Login-Template-Flask.git
-   ```
-
-2. Run the application.
-   ```bash
-   python main.py
-   ```
-
-3. Open the app in your browser: [http://localhost:5000](http://localhost:5000)
-
-<!-- Usage -->
-## Usage 🚀
-
-- Customize the templates in the `templates/` folder for your specific needs.
-- Enhance the style using Tailwind CSS in the `static/style.css` file.
-- Extend the functionality based on your project requirements.
-
-<!-- Features -->
-## Features ✨
-
-- **Hashing**: Secure password hashing using the SHA-256 algorithm.
-- **Session Management**: Flask session for user authentication.
-- **Responsive Design**: Tailwind CSS for a modern and responsive UI.
-
-<!-- Database Configuration -->
-## Database Configuration 🛡️
-
-This template uses a simple JSON file (`users.json`) to store user information for quick setup and testing. However, for a production environment, it's recommended to set up a secure database.
-
-### Steps to Set Up a Database:
-
-1. Choose a Database: Select a suitable database system (e.g., PostgreSQL, MySQL, SQLite).
-
-2. Install Database Engine: Install the necessary database engine and libraries.
-
-3. Update Configuration: Modify the `main.py` file to use your database configuration.
-
-    ```python
-    # Replace these lines with your database configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'your_database_uri'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    ```
-
-4. Create User Table: Define a `User` model and create the necessary database tables.
-
-    ```python
-    from flask_sqlalchemy import SQLAlchemy
-
-    db = SQLAlchemy(app)
-
-    class User(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        username = db.Column(db.String(50), unique=True, nullable=False)
-        password = db.Column(db.String(100), nullable=False)
-    ```
-
-5. Migrate Database: Run migrations to apply changes to the database.
-
-    ```bash
-    flask db init
-    flask db migrate
-    flask db upgrade
-    ```
-
-### Secure Database Operations:
-
-- **Use SQLAlchemy ORM**: Leverage SQLAlchemy ORM to perform secure database operations and prevent SQL injection.
-
-- **Hashed Passwords**: Store hashed passwords using a secure hashing algorithm.
-
-- **Input Validation**: Implement proper input validation to prevent malicious attacks.
-
-**Note:** Always follow best practices for database security and user authentication when deploying to a production environment.
-
-<!-- JSON File -->
-## JSON File 📋
-
-This template uses a simple JSON file (`users.json`) to store user information for quick setup and testing. While convenient for development, it's not suitable for production due to security concerns.
-
-### Secure JSON File Operations:
-
-- **Restrict Access**: Ensure proper file permissions to restrict access.
-
-- **Backup Regularly**: Regularly back up the JSON file to prevent data loss.
-
-- **Limit Sensitive Data**: Avoid storing sensitive information directly in the JSON file.
-
-<!-- Security -->
-## Security 🔐
-
-This template follows security best practices:
-
-- **Password Hashing**: User passwords are securely hashed using the SHA-256 algorithm.
-
-- **Session Management**: Flask session management for secure user authentication.
-
-- **Secure Forms**: Proper validation and sanitation of user inputs in forms.
-
-- **HTTPS**: Deploy the application with HTTPS for secure communication.
-
-Always stay informed about the latest security updates and adapt the template accordingly.
-
-
-
-
-<!-- License -->
-## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-<!-- Acknowledgments -->
-## Acknowledgments 🙌
-
-- Flask: [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
-- Tailwind CSS: [https://tailwindcss.com/](https://tailwindcss.com/)
-
-
-<!-- Preview -->
-## Preview 🚀
-
-Take a glimpse of the sleek and user-friendly login template. The following screenshots showcase the login, signup, and dashboard pages, along with alerts for incorrect password and password mismatch.
-
-### Login Page:
-
-![Login Page](https://github.com/ichliebees/Login-Template-Flask/assets/138697155/6f38df61-b4a7-4f8f-a4bc-bc62c1d3d4a4)
-
-### Invalid Password Alert:
-
-![Invalid Password Alert](https://github.com/ichliebees/Login-Template-Flask/assets/138697155/1ec24d84-b5cc-4168-95f5-131209d14aeb)
-
-### Signup Page:
-
-![Signup Page](https://github.com/ichliebees/Login-Template-Flask/assets/138697155/72208a5f-0d53-466e-8abb-079d9dbca47f)
-
-### Password Mismatch Alert:
-
-![Password Mismatch Alert](https://github.com/ichliebees/Login-Template-Flask/assets/138697155/d21cb890-a052-4fa1-b697-322761ab91ad)
-
-### Dashboard Page:
-
-![Dashboard Page](https://github.com/ichliebees/Login-Template-Flask/assets/138697155/60f3a2a2-de7a-4ba5-bbe5-379a92d9d6fe)
-
----
-
-### Explore More:
-
-Feel free to explore the features, security measures, and customization options in this Flask login template. If you encounter any issues or have suggestions for improvements, don't hesitate to contribute or open an issue.
-
-Your feedback is valuable! 🌟
 
 

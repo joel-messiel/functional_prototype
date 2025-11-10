@@ -159,6 +159,7 @@ def changePasswordModel(email, new_password, confirm_new_password):
         }
     
     except Exception as e:
+        # Email not found
         print("Exception: ", e)
         return -1
     
