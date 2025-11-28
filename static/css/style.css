@@ -12,6 +12,49 @@
 }
 
 
+.bg-gray-manati {
+    background-color: var(--gray-manati);
+}
+
+.bg-golden-manati {
+    background-color: var(--golden-manati);
+}
+
+.bg-hover-golden-manati:hover {
+    background-color: var(--hover-golden-manati);
+}
+
+.text-gray-manati {
+    color: var(--gray-manati);
+}
+
+.text-golden-manati {
+    color: var(--golden-manati);
+}
+
+.text-white-custom {
+    color: var(--white);
+}
+
+/* Sidebar buttons */
+.sidebar-btn {
+   background-color: var(--gray-manati);
+    color: var(--white);
+    border-radius: 0.75rem; /* rounded-xl */
+    width: 7rem;   /* 96px → cuadrado */
+    height: 7rem;  /* 96px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    transition: background-color 0.15s ease-in-out;
+}
+
+.sidebar-btn:hover {
+    background-color: #5B6A75;
+}
+
 * {
     margin: 0;
     padding: 0;

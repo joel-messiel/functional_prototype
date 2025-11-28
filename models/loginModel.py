@@ -101,7 +101,9 @@ def loginModel(email, password):
         res = db.select(sql, (email))[0]
         user = {
             "employee_id": res['employee_id'], 
-            "email": res['email'], 
+            "email": res['email'],
+            "first_name": res['first_name'],
+            "last_name": res['last_name'], 
             "password": res['password'], 
             "is_active": res['is_active'],
             "role": res['role']
@@ -120,9 +122,13 @@ def loginModel(email, password):
             # If the user is not active, return false
             flash("User is not active")
             return -1
+        
+        full_name = f"{user['first_name']} {user['last_name']}"
         # If the user is found, save the user ID in the session 
         session['username'] = user['employee_id']
         # Create the session['customer'] saving the customer ID if user is found
+        session['userfullname'] = full_name
+        # Saves the customers full name (this should be called username pero no queria cambiarlo por si explotaba algo)
         if user["role"] == "employee":
             return 2
         

@@ -1,10 +1,177 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% set hide_nav = true %}
 
 {% block content %}
-    <div class="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
-        <h2 class="text-3xl font-semibold mb-4">{{ username }}'s Dashboard</h2>
-        <p>Welcome to your dashboard!</p>
+<div class="min-h-screen bg-white">
 
-        <!-- Add your additional dashboard content here -->
+  <!-- TOP BAR -->
+  <header class="bg-gray-manati text-white-custom shadow-md">
+    <div class="max-w-full mx-auto flex items-center justify-between h-16 px-8">
+
+      <!-- Logo + Title -->
+      <div class="flex items-center gap-3">
+        <img src="{{ url_for('static', filename='images/Icono_solo.png') }}"
+             class="w-10 h-10 object-contain" />
+        <span class="text-lg font-semibold tracking-wide">Manejador de Turnos</span>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex items-center gap-8 text-sm">
+        <div class="flex items-center gap-1 cursor-pointer hover:text-[var(--color-text-light)]">
+          <span>Fila</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+
+        <div class="flex items-center gap-1 cursor-pointer hover:text-[var(--color-text-light)]">
+          <span>Servicio</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+
+        <div class="flex items-center gap-1 cursor-pointer hover:text-[var(--color-text-light)]">
+          <span>Estación</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+
+        <div class="flex items-center gap-1 cursor-pointer hover:text-[var(--color-text-light)]">
+          <span>Sucursal</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+
+        <!-- User -->
+        <div class="relative">
+  <button id="user-menu-button"
+          class="flex items-center gap-2 cursor-pointer">
+    <span class="text-sm">{{ session['userfullname'] }}</span>
+    <i class="far fa-user-circle text-2xl"></i>
+  </button>
+
+  <div id="user-menu"
+       class="hidden absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded-md shadow-lg py-2 z-50">
+    <form method="POST" action="{{ url_for('logout') }}">
+      <button type="submit"
+              class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+        Cerrar sesión
+      </button>
+    </form>
+  </div>
+</div>
+      </div>
+
     </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="flex gap-6 px-8 py-8">
+
+    <!-- LEFT MAIN AREA -->
+    <div class="flex-1 space-y-8">
+
+      <!-- Golden Boxes Row -->
+      <div class="grid grid-cols-2 gap-8">
+
+        <!-- Fila Llamada -->
+        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-10 py-8">
+          <p class="text-xl tracking-wide">Fila llamada: Certificado de Depósito</p>
+          <p class="text-7xl font-bold mt-4">900</p>
+        </div>
+
+        <!-- Tiempo total -->
+        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-10 py-8">
+          <p class="text-xl tracking-wide">Tiempo total de servicio:</p>
+          <p class="text-7xl font-bold mt-4">0:00:00</p>
+        </div>
+
+      </div>
+
+      <!-- CLIENT INFO -->
+      <section class="bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-200">
+        <h2 class="text-2xl font-semibold text-gray-manati">Información del Cliente</h2>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Nombre</label>
+            <input
+              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              value="Jose" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Inicial</label>
+            <input
+              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              value="M" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Apellidos</label>
+            <input
+              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              value="Rodriguez" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Motivo de Visita</label>
+          <input
+            class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm bg-gray-100 uppercase focus:ring-2 focus:ring-[var(--golden-manati)] text-gray-700 "
+            value="CERTIFICADO DE DEPOSITO" />
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Comentario</label>
+          <textarea rows="5"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)] resize-none"></textarea>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR BUTTONS -->
+     <aside class="w-40 flex flex-col gap-4 justify-center">
+
+      <button class="sidebar-btn">
+        <i class="fas fa-user-check text-3xl mb-2"></i>
+        <span class="text-sm px-2 text-center">Completar turno</span>
+      </button>
+
+      <button class="sidebar-btn">
+        <i class="fas fa-arrow-right text-3xl mb-2"></i>
+        <span class="text-sm px-2 text-center">Llamar Próximo</span>
+      </button>
+
+      <button class="sidebar-btn">
+        <i class="fas fa-volume-up text-3xl mb-2"></i>
+        <span class="text-sm px-2 text-center">Volver a llamar</span>
+      </button>
+
+      <button class="sidebar-btn">
+        <i class="fas fa-user-times text-3xl mb-2"></i>
+        <span class="text-sm px-2 text-center">No presente</span>
+      </button>
+
+      <button class="sidebar-btn">
+        <i class="fas fa-arrows-alt text-3xl mb-2"></i>
+        <span class="text-sm px-2 text-center">Transferir</span>
+      </button>
+
+    </aside>
+
+  </div>
+</div>
+<script>
+  const userBtn = document.getElementById("user-menu-button");
+  const userMenu = document.getElementById("user-menu");
+
+  if (userBtn && userMenu) {
+    userBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      userMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", function () {
+      userMenu.classList.add("hidden");
+    });
+  }
+</script>
 {% endblock %}
