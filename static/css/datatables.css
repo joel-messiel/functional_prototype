@@ -1,0 +1,188 @@
+:root {
+    --golden-manati: #C8AC64;
+    --gray-manati: #45545F;
+}
+
+/* =========================
+   TABLE LAYOUT & BORDER 
+   ========================== */
+#turns-table {
+    width: 100%;
+}
+
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;
+    /* vertical gap between rows */
+    background: transparent !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: none !important;
+}
+
+table.dataTable thead th,
+table.dataTable tbody td {
+    border: none !important;
+}
+
+/* =========================
+   HEADER 
+   ========================== */
+#turns-table thead {
+    background-color: var(--golden-manati);
+    color: var(--gray-manati);
+    /* Manatí gray text */
+}
+
+#turns-table thead th {
+    padding: 10px 14px;
+    font-weight: 600;
+}
+
+/* Preserve DataTables sort icons but remove their extra borders */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    background-color: var(--golden-manati) !important;
+}
+
+/* Round the header bar slightly */
+#turns-table thead tr th:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#turns-table thead tr th:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* =========================
+   BODY ROWS: PILL SHAPE, NO OUTLINES
+   ========================== */
+#turns-table tbody tr.turn-row td {
+    background-color: var(--gray-manati);
+    /* default row color */
+    color: #ffffff;
+    padding: 10px 14px;
+}
+
+/* space between pills without white border lines */
+#turns-table tbody tr.turn-row td {
+    border-top: 0 solid transparent;
+}
+
+/* pill effect */
+#turns-table tbody tr.turn-row td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#turns-table tbody tr.turn-row td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+table.dataTable.display tbody tr:hover>* {
+    box-shadow: none !important;
+}
+
+/* =========================
+   COLORS PER TURN STATE
+   ========================== */
+/* Atendido */
+#turns-table tbody tr.turn-atendido td {
+    background-color: #356d53;
+
+}
+
+/* Waiting */
+#turns-table tbody tr.turn-esperando td {
+    background-color: var(--gray-manati);
+
+}
+
+/* Canceled */
+#turns-table tbody tr.turn-cancelado td {
+    background-color: #5b6c7f;
+
+}
+
+/* Taking too much time */
+#turns-table tbody tr.turn-en-proceso td {
+    background-color: #6d3a44;
+
+}
+
+/* optional: bold the longest wait time (if you do it via backend/JS) */
+#turns-table tbody tr.turn-en-proceso td:nth-child(2) {
+    font-weight: 600;
+}
+
+/* =========================
+   PAGINATION
+   ========================== */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 9999px !important;
+    border: none;
+    margin: 0 2px;
+    padding: 2px 8px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: var(--golden-manati) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--golden-manati) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 8px;
+}
+
+#turns-table_wrapper,
+#turns-table_wrapper * {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background-clip: padding-box;
+}
+
+
+
+/* =========================
+   Filters for Datatable
+   ========================== */
+
+/* Convert to a 4-column full-width grid */
+.turn-filter-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+    height: 50px !important;
+}
+
+/* Make each pill stretch inside its grid cell */
+.turn-filter-btn {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    background-color: #dfe6ec;
+    color: #45545F;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    border-radius: 9999px;
+}
+
+/* Golden when active */
+.turn-filter-btn--active {
+    background-color: var(--golden-manati);
+    color: white;
+}
+
+.dataTables_filter {
+    display: none !important;
+}

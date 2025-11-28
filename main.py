@@ -46,8 +46,17 @@ def dashboard():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+
+    # Remove from session the following data
     session.pop('username', None)
+    session.pop('role', None)
+    session.pop('userfullname', None)
     return redirect(url_for('login'))
+
+# TEMPORARY : Since the pause and profile page arent implemented i redirected to this
+@app.route('/not_found', methods=['GET', 'POST'])
+def not_found():
+      return render_template('not_found.html')
 
 
 @app.errorhandler(404)

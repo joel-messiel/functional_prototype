@@ -2,7 +2,7 @@
 {% set hide_nav = true %}
 
 {% block content %}
-<div class="min-h-screen bg-white">
+<div class="min-h-screen bg-white pr-40">
 
   <!-- TOP BAR -->
   <header class="bg-gray-manati text-white-custom shadow-md">
@@ -10,9 +10,9 @@
 
       <!-- Logo + Title -->
       <div class="flex items-center gap-3">
-        <img src="{{ url_for('static', filename='images/Icono_solo.png') }}"
-             class="w-10 h-10 object-contain" />
+        <img src="{{ url_for('static', filename='images/Icono_solo.png') }}" class="w-10 h-10 object-contain" />
         <span class="text-lg font-semibold tracking-wide">Manejador de Turnos</span>
+        <span class="text-sm">{{session['role']}}</span>
       </div>
 
       <!-- Filters -->
@@ -39,73 +39,91 @@
 
         <!-- User -->
         <div class="relative">
-  <button id="user-menu-button"
-          class="flex items-center gap-2 cursor-pointer">
-    <span class="text-sm">{{ session['userfullname'] }}</span>
-    <i class="far fa-user-circle text-2xl"></i>
-  </button>
+          <button id="user-menu-button" class="flex items-center gap-2 cursor-pointer">
+            <span class="text-sm">{{ session['userfullname'] }}</span>
+            <i class="fa-solid fa-circle-user text-2xl"></i>
+          </button>
 
-  <div id="user-menu"
-       class="hidden absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded-md shadow-lg py-2 z-50">
-    <form method="POST" action="{{ url_for('logout') }}">
-      <button type="submit"
-              class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-        Cerrar sesión
-      </button>
-    </form>
-  </div>
-</div>
+          <div id="user-menu"
+            class="hidden absolute right-0 mt-2 bg-white text-gray-800 rounded-md shadow-lg py-2 z-50">
+            <!-- PAUSE -->
+            <!-- TODO: Change route to actual route -->
+            <form method="POST" action="{{ url_for('not_found') }}">
+              <button type="submit" class="w-full flex items-center text-left px-4 py-2 text-sm hover:bg-gray-100">
+                <i class="fas fa-pause mr-4"></i>
+                Pausar
+              </button>
+            </form>
+
+            <!-- LOGOUT -->
+            <form method="POST" action="{{ url_for('logout') }}">
+              <button type="submit" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Cerrar sesión
+              </button>
+            </form>
+
+            <!-- VIEW PROFILE -->
+            <!-- TODO: Change route to actual route -->
+            <form method="POST" action="{{ url_for('not_found') }}">
+              <button type="submit" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                <i class="fa-solid fa-user mr-3"></i>
+                Ver Perfíl
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
 
     </div>
   </header>
 
   <!-- MAIN LAYOUT -->
-  <div class="flex gap-6 px-8 py-8">
+  <div class="flex gap-6 px-6 py-6 max-w-5xl mx-auto">
 
     <!-- LEFT MAIN AREA -->
     <div class="flex-1 space-y-8">
 
       <!-- Golden Boxes Row -->
-      <div class="grid grid-cols-2 gap-8">
+      <div class="grid grid-cols-2 gap-6">
 
         <!-- Fila Llamada -->
-        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-10 py-8">
-          <p class="text-xl tracking-wide">Fila llamada: Certificado de Depósito</p>
-          <p class="text-7xl font-bold mt-4">900</p>
+        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-6 py-5">
+          <p class="text-lg text-center tracking-wide">Fila llamada: Certificado de Depósito</p>
+          <p class="text-4xl text-center font-bold mt-3">900</p>
         </div>
 
         <!-- Tiempo total -->
-        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-10 py-8">
-          <p class="text-xl tracking-wide">Tiempo total de servicio:</p>
-          <p class="text-7xl font-bold mt-4">0:00:00</p>
+        <div class="bg-golden-manati text-white-custom rounded-2xl shadow-lg px-6 py-5">
+          <p class="text-lg text-center tracking-wide">Tiempo total de servicio:</p>
+          <p class="text-4xl text-center font-bold mt-3">0:00:00</p>
         </div>
 
       </div>
 
       <!-- CLIENT INFO -->
-      <section class="bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-200">
-        <h2 class="text-2xl font-semibold text-gray-manati">Información del Cliente</h2>
+      <section class="bg-white rounded-2xl shadow-lg p-6 space-y-5 border border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-manati">Información del Cliente</h2>
 
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-3 gap-4 w-full">
           <div>
             <label class="block text-sm text-gray-600 mb-1">Nombre</label>
             <input
-              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              class="w-full text-gray-700 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
               value="Jose" />
           </div>
 
           <div>
             <label class="block text-sm text-gray-600 mb-1">Inicial</label>
             <input
-              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              class="w-full text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
               value="M" />
           </div>
 
           <div>
             <label class="block text-sm text-gray-600 mb-1">Apellidos</label>
             <input
-              class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
+              class="w-full text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)]"
               value="Rodriguez" />
           </div>
         </div>
@@ -120,44 +138,145 @@
         <div>
           <label class="block text-sm text-gray-600 mb-1">Comentario</label>
           <textarea rows="5"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)] resize-none"></textarea>
+            class="text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--golden-manati)] resize-none"></textarea>
         </div>
 
       </section>
+      <!-- TURNS SECTION -->
+      <div class="space-y-3">
+        <h2 class="text-xl font-semibold text-gray-manati">Listado de Turnos</h2>
+
+        <!-- FILTER BUTTONS -->
+        <div class="turn-filter-container flex flex-wrap gap-4 mb-1">
+          <button type="button"
+            class="turn-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-600 text-xs font-semibold shadow-sm"
+            data-status="ESPERANDO">
+            Turnos esperando
+          </button>
+
+          <button type="button"
+            class="turn-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-600 text-xs font-semibold shadow-sm"
+            data-status="CANCELADO">
+            Turnos cancelados
+          </button>
+
+          <button type="button"
+            class="turn-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-600 text-xs font-semibold shadow-sm"
+            data-status="LLAMADO">
+            Turnos llamados
+          </button>
+
+          <button type="button"
+            class="turn-filter-btn px-6 py-2 rounded-full bg-gray-200 text-gray-600 text-xs font-semibold shadow-sm"
+            data-status="ATENDIDO">
+            Turnos atendidos
+          </button>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl bg-white h-72">
+          <table id="turns-table" class="min-w-full text-sm">
+            <thead>
+              <tr>
+                <th class="px-4 py-3 text-center">Turno</th>
+                <th class="px-4 py-3 text-center">Tiempo en Fila</th>
+                <th class="px-4 py-3 text-center">Servicio</th>
+                <th class="px-4 py-3 text-center">Estación</th>
+                <th class="px-4 py-3 text-center">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="turn-row turn-atendido">
+                <td>902</td>
+                <td>00:00:23</td>
+                <td>IMPEDIDOS</td>
+                <td>PLATAFORMA1</td>
+                <td>ATENDIDO</td>
+              </tr>
+
+              <tr class="turn-row turn-esperando">
+                <td>101</td>
+                <td>00:01:53</td>
+                <td>SELLOS</td>
+                <td>–</td>
+                <td>ESPERANDO</td>
+              </tr>
+
+              <tr class="turn-row turn-esperando">
+                <td>100</td>
+                <td>00:05:23</td>
+                <td>SELLOS</td>
+                <td>–</td>
+                <td>ESPERANDO</td>
+              </tr>
+
+              <tr class="turn-row turn-esperando">
+                <td>904</td>
+                <td>00:08:00</td>
+                <td>REGULAR</td>
+                <td>–</td>
+                <td>ESPERANDO</td>
+              </tr>
+
+              <tr class="turn-row turn-en-proceso">
+                <td>897</td>
+                <td><strong>00:20:21</strong></td>
+                <td>REGULAR</td>
+                <td>CAJA1</td>
+                <td>EN PROCESO</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+
 
     </div>
 
-    <!-- RIGHT SIDEBAR BUTTONS -->
-     <aside class="w-40 flex flex-col gap-4 justify-center">
 
-      <button class="sidebar-btn">
-        <i class="fas fa-user-check text-3xl mb-2"></i>
-        <span class="text-sm px-2 text-center">Completar turno</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fas fa-arrow-right text-3xl mb-2"></i>
-        <span class="text-sm px-2 text-center">Llamar Próximo</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fas fa-volume-up text-3xl mb-2"></i>
-        <span class="text-sm px-2 text-center">Volver a llamar</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fas fa-user-times text-3xl mb-2"></i>
-        <span class="text-sm px-2 text-center">No presente</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fas fa-arrows-alt text-3xl mb-2"></i>
-        <span class="text-sm px-2 text-center">Transferir</span>
-      </button>
-
-    </aside>
 
   </div>
+  <!-- RIGHT SIDEBAR BUTTONS -->
+  <aside class="sidebar fixed right-0 top-0 h-screen w-40 shadow-lg
+         flex flex-col items-center justify-center gap-4 px-2">
+
+    <button class="sidebar-btn flex-none w-24 h-24 rounded-2xl bg-white shadow-md
+         flex flex-col items-center justify-center
+         text-gray-700 hover:bg-gray-200 transition">
+      <i class="fas fa-user-check text-2xl mb-1"></i>
+      <span class="text-xs text-center px-1">Completar turno</span>
+    </button>
+
+    <button class="sidebar-btn flex-none w-24 h-24 rounded-2xl bg-white shadow-md
+         flex flex-col items-center justify-center
+         text-gray-700 hover:bg-gray-200 transition">
+      <i class="fas fa-arrow-right text-2xl mb-1"></i>
+      <span class="text-xs text-center px-1">Llamar Próximo</span>
+    </button>
+
+    <button class="sidebar-btn flex-none w-24 h-24 rounded-2xl bg-white shadow-md
+         flex flex-col items-center justify-center
+         text-gray-700 hover:bg-gray-200 transition">
+      <i class="fas fa-volume-up text-2xl mb-1"></i>
+      <span class="text-xs text-center px-1">Volver a llamar</span>
+    </button>
+
+    <button class="sidebar-btn flex-none w-24 h-24 rounded-2xl bg-white shadow-md
+         flex flex-col items-center justify-center
+         text-gray-700 hover:bg-gray-200 transition">
+      <i class="fas fa-user-times text-2xl mb-1"></i>
+      <span class="text-xs text-center px-1">No presente</span>
+    </button>
+
+    <button class="sidebar-btn flex-none w-24 h-24 rounded-2xl bg-white shadow-md
+         flex flex-col items-center justify-center
+         text-gray-700 hover:bg-gray-200 transition">
+      <i class="fas fa-arrows-alt text-2xl mb-1"></i>
+      <span class="text-xs text-center px-1">Transferir</span>
+    </button>
+
+
+  </aside>
 </div>
 <script>
   const userBtn = document.getElementById("user-menu-button");
@@ -173,5 +292,50 @@
       userMenu.classList.add("hidden");
     });
   }
+
+  // Initialize js datatable to work with the filter buttons
+  $(document).ready(function () {
+    const table = $('#turns-table').DataTable({
+      paging: true,
+      searching: true,
+      lengthChange: false,
+      info: false,
+      ordering: true,
+      language: {
+        paginate: {
+          previous: 'Anterior',
+          next: 'Siguiente'
+        },
+        emptyTable: 'No hay turnos disponibles',
+        zeroRecords: 'No hay turnos para este filtro'
+      }
+    });
+
+    // ESTADO is the last column → index 4 (0-based)
+    const STATUS_COL_INDEX = 4;
+
+    $('.turn-filter-btn').on('click', function () {
+      const $btn = $(this);
+      const status = $btn.data('status');
+      const isActive = $btn.hasClass('turn-filter-btn--active');
+
+      // Clear active state from all buttons
+      $('.turn-filter-btn').removeClass('turn-filter-btn--active');
+
+      if (isActive) {
+        // If you click the active button again → clear filter (show all)
+        table.column(STATUS_COL_INDEX).search('').draw();
+      } else {
+        // Activate this one
+        $btn.addClass('turn-filter-btn--active');
+
+        // Exact match on the status column (regex true, smart false)
+        table
+          .column(STATUS_COL_INDEX)
+          .search('^' + status + '$', true, false)
+          .draw();
+      }
+    });
+  });
 </script>
 {% endblock %}

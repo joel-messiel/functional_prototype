@@ -9,6 +9,7 @@
     --golden-manati: #C8AC64;
     --hover-golden-manati: #b99948;
     --white: #FFFFFF;
+    --sidebarBG: #9DA8B1;
 }
 
 
@@ -38,21 +39,24 @@
 
 /* Sidebar buttons */
 .sidebar-btn {
-   background-color: var(--gray-manati);
+    background-color: var(--gray-manati);
     color: var(--white);
-    border-radius: 0.75rem; /* rounded-xl */
-    width: 7rem;   /* 96px → cuadrado */
-    height: 7rem;  /* 96px */
+    border-radius: 0.75rem;
+    /* rounded-xl */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
     transition: background-color 0.15s ease-in-out;
 }
 
 .sidebar-btn:hover {
     background-color: #5B6A75;
+}
+
+.sidebar {
+    background-color: var(--sidebarBG);
 }
 
 * {
@@ -191,4 +195,8 @@ body::-webkit-scrollbar-track {
 
 .confirm-pass:hover {
     background-color: var(--hover-golden-manati);
+}
+
+#user-menu {
+    width: 12rem;
 }

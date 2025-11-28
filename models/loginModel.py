@@ -128,15 +128,21 @@ def loginModel(email, password):
         session['username'] = user['employee_id']
         # Create the session['customer'] saving the customer ID if user is found
         session['userfullname'] = full_name
-        # Saves the customers full name (this should be called username pero no queria cambiarlo por si explotaba algo)
-        if user["role"] == "employee":
-            return 2
-        
+
+        # Store the role in session 
+        if user['role'] == 'branch_admin':
+            session['role'] = 'Administrador de Sucursal'
+        elif user['role'] == 'general_admin':
+            session['role'] = 'Administrador General'
+        elif user['role'] == 'employee':
+            session['role'] = 'Empleado'
+           
+    
         return 1
     
     else:
         # If it didn't find user, return false
-        flash("Invalid email or password", "error")
+        # flash("Invalid email or password", "error")
         return -1
     
 
