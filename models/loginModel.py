@@ -94,6 +94,7 @@ def send_verification_email(admin_email, admin_name, user_name, verification_url
 
 def loginModel(email, password):
     user = None
+    user_password = None
     db = Dbconnect()
     sql = "SELECT * FROM employee WHERE email = %s"
     # Save user info in list
@@ -104,46 +105,28 @@ def loginModel(email, password):
             "email": res['email'],
             "first_name": res['first_name'],
             "last_name": res['last_name'], 
-            "password": res['password'], 
             "is_active": res['is_active'],
             "role": res['role']
         }
+        user_password = res['password']
     
     except Exception as e:
         # Email not found
         print("Exception in loginmodel: ", e)
-        return -1
+        return {}
 
     # sha256_crypt.hash("password") = this is what is used to encrypt a password
     # sha256_crypt.verify(password_unhashed, password_hashed) = this is what is used to compare an unhashed and hashed password
 
-    if sha256_crypt.verify(password, user['password']) is True:
+    if sha256_crypt.verify(password, user_password) is True:
         if user['is_active'] == 0:
             # If the user is not active, return false
             flash("User is not active")
-            return -1
+            return {}
         
-        full_name = f"{user['first_name']} {user['last_name']}"
-        # If the user is found, save the user ID in the session 
-        session['username'] = user['employee_id']
-        # Create the session['customer'] saving the customer ID if user is found
-        session['userfullname'] = full_name
-
-        # Store the role in session 
-        if user['role'] == 'branch_admin':
-            session['role'] = 'Administrador de Sucursal'
-        elif user['role'] == 'general_admin':
-            session['role'] = 'Administrador General'
-        elif user['role'] == 'employee':
-            session['role'] = 'Empleado'
-           
+        return user
     
-        return 1
-    
-    else:
-        # If it didn't find user, return false
-        # flash("Invalid email or password", "error")
-        return -1
+    return {}
     
 
 def changePasswordModel(email, new_password, confirm_new_password):
@@ -243,6 +226,8 @@ def changePasswordModel(email, new_password, confirm_new_password):
     
     else:
         return -2
+    
+    return 1
     
 def deletePasswordResetEntry(token):
     db = Dbconnect()
