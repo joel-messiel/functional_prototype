@@ -1,11 +1,16 @@
 import pymysql
 import pymysql.cursors
+from dotenv import load_dotenv
+import os
 
-DB_URL = '127.0.0.1'
-DB_NAME = 'prototype_db'
-DB_PORT = 3306
-DB_USER = 'root'
-DB_PASSWORD = ''
+load_dotenv()
+
+
+DB_URL = os.getenv('DB_URL')
+DB_NAME = os.getenv('DB_NAME') 
+DB_PORT = os.getenv('DB_PORT')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
 
 # Use this to access database
 class Dbconnect:
